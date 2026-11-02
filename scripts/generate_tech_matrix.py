@@ -30,20 +30,19 @@ frames = []
 
 for frame_idx in range(NUM_FRAMES):
     t = frame_idx / NUM_FRAMES
-    w1 = 2 * math.pi * t
+    w = 2 * math.pi * t
 
     img = Image.new("RGBA", (W, H), (11, 14, 23, 255))
     draw = ImageDraw.Draw(img)
 
-    # Frame border
-    draw.rounded_rectangle([4, 4, W - 5, H - 5], radius=14, outline=(88, 101, 242, 90), width=1)
+    # Clean outer border
+    draw.rounded_rectangle([3, 3, W - 4, H - 4], radius=14, outline=(88, 101, 242, 60), width=1)
 
     # Header
-    pulse_dot = 0.6 + 0.4 * math.sin(w1)
-    draw.ellipse([20, 16, 26, 22], fill=(0, 242, 254, int(255 * pulse_dot)))
-    draw.text((34, 13), "3D SYSTEMS CAPABILITY MATRIX // LOW-LEVEL & AI ARCHITECTURE", font=font_header, fill=(220, 235, 255, 250))
-    
-    # 2 rows of 4 columns
+    pulse = 0.75 + 0.25 * math.sin(w)
+    draw.ellipse([20, 16, 26, 22], fill=(0, 242, 254, int(255 * pulse)))
+    draw.text((34, 13), "3D SYSTEMS CAPABILITY MATRIX // LOW-LEVEL & AI ARCHITECTURE", font=font_header, fill=(220, 235, 255, 245))
+
     cols = 4
     chip_w = (W - 36 - 3 * 12) // cols
     chip_h = 44
@@ -54,16 +53,11 @@ for frame_idx in range(NUM_FRAMES):
         cx = 18 + c * (chip_w + 12)
         cy = 40 + r * (chip_h + 10)
 
-        # Wave shimmer offset per chip
-        shimmer = (t + idx * 0.12) % 1.0
-        shimmer_glow = int(120 + 80 * math.sin(shimmer * 2 * math.pi))
-
+        # Calm, gentle ambient breath
+        glow_val = int(80 + 35 * math.sin(w + idx * 0.4))
         draw.rounded_rectangle([cx, cy, cx + chip_w, cy + chip_h], radius=8,
-                               fill=(16, 22, 36, 220), outline=(*col, shimmer_glow), width=1)
-
-        # Mini accent indicator line
-        draw.line([(cx + 8, cy + chip_h - 4), (cx + 36, cy + chip_h - 4)], fill=(*col, 220), width=2)
-
+                               fill=(15, 20, 32, 240), outline=(*col, glow_val), width=1)
+        draw.line([(cx + 8, cy + chip_h - 4), (cx + 36, cy + chip_h - 4)], fill=(*col, 200), width=2)
         draw.text((cx + 10, cy + 7), name, font=font_bold, fill=(255, 255, 255, 255))
         draw.text((cx + 10, cy + 24), desc, font=font_mono, fill=(150, 175, 205, 210))
 
@@ -81,4 +75,4 @@ frames[0].save(
 
 import os
 sz = os.path.getsize(output_matrix)
-print(f"Tech Matrix Animated GIF created! Size: {sz / (1024*1024):.2f} MB ({sz} bytes)")
+print(f"Tech Matrix GIF created! Size: {sz / (1024*1024):.2f} MB ({sz} bytes)")
