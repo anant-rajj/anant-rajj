@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 130" width="100%" height="100%">
+  <defs>
+    <linearGradient id="t-cube" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182234" />
+      <stop offset="100%" stop-color="#0e131d" />
+    </linearGradient>
+    <linearGradient id="t-edge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#00ff88" />
+    </linearGradient>
+    <filter id="t-glow">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    @keyframes techPulse {
+      0%, 100% { stroke-opacity: 0.3; }
+      50% { stroke-opacity: 1; }
+    }
+    .grid-cube {
+      transition: transform 0.3s ease;
+    }
+    .neon-pulse {
+      animation: techPulse 3s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="900" height="130" rx="10" fill="#080a0f" stroke="#242b38" stroke-width="1" />
+
+  <!-- Title / Header -->
+  <g transform="translate(30, 26)">
+    <text x="0" y="0" fill="#00f2fe" font-family="ui-monospace, monospace" font-size="11" font-weight="700" letter-spacing="1">
+      // 3D ISOMETRIC CAPABILITY &amp; TECHNOLOGY MATRIX
+    </text>
+  </g>
+
+  <!-- Isometric Tech Chips Row 1 -->
+  <g transform="translate(30, 44)">
+    <!-- Item 1: C / Obj-C -->
+    <g transform="translate(0, 0)">
+      <rect width="95" height="30" rx="5" fill="url(#t-cube)" stroke="#00f2fe" stroke-width="1.2" class="neon-pulse" />
+      <text x="47" y="19" fill="#00f2fe" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">C / OBJ-C</text>
+    </g>
+
+    <!-- Item 2: Swift -->
+    <g transform="translate(105, 0)">
+      <rect width="85" height="30" rx="5" fill="url(#t-cube)" stroke="#ff9f43" stroke-width="1.2" />
+      <text x="42" y="19" fill="#ff9f43" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">SWIFT</text>
+    </g>
+
+    <!-- Item 3: Python -->
+    <g transform="translate(200, 0)">
+      <rect width="90" height="30" rx="5" fill="url(#t-cube)" stroke="#38ef7d" stroke-width="1.2" />
+      <text x="45" y="19" fill="#38ef7d" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">PYTHON</text>
+    </g>
+
+    <!-- Item 4: IOKit Framework -->
+    <g transform="translate(300, 0)">
+      <rect width="135" height="30" rx="5" fill="url(#t-cube)" stroke="#58a6ff" stroke-width="1.2" />
+      <text x="67" y="19" fill="#58a6ff" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">IOKIT / POWR</text>
+    </g>
+
+    <!-- Item 5: MultitouchSupport -->
+    <g transform="translate(445, 0)">
+      <rect width="150" height="30" rx="5" fill="url(#t-cube)" stroke="#00ff88" stroke-width="1.2" class="neon-pulse" />
+      <text x="75" y="19" fill="#00ff88" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">MULTITOUCH API</text>
+    </g>
+
+    <!-- Item 6: AST Security -->
+    <g transform="translate(605, 0)">
+      <rect width="125" height="30" rx="5" fill="url(#t-cube)" stroke="#bc8cff" stroke-width="1.2" />
+      <text x="62" y="19" fill="#bc8cff" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">AST ANALYSIS</text>
+    </g>
+
+    <!-- Item 7: Robotics PWM -->
+    <g transform="translate(740, 0)">
+      <rect width="100" height="30" rx="5" fill="url(#t-cube)" stroke="#d29922" stroke-width="1.2" />
+      <text x="50" y="19" fill="#d29922" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">PWM SERVO</text>
+    </g>
+  </g>
+
+  <!-- Isometric Tech Chips Row 2 -->
+  <g transform="translate(30, 84)">
+    <!-- Sub 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="140" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="70" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">SHANNON ENTROPY</text>
+    </g>
+
+    <!-- Sub 2 -->
+    <g transform="translate(150, 0)">
+      <rect width="145" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="72" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">ZIP-SLIP DEFENSE</text>
+    </g>
+
+    <!-- Sub 3 -->
+    <g transform="translate(305, 0)">
+      <rect width="150" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="75" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">OLLAMA / LLM RUNTIME</text>
+    </g>
+
+    <!-- Sub 4 -->
+    <g transform="translate(465, 0)">
+      <rect width="135" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="67" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">ARM64 ASSEMBLY</text>
+    </g>
+
+    <!-- Sub 5 -->
+    <g transform="translate(610, 0)">
+      <rect width="130" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="65" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">PYTEST HARNESS</text>
+    </g>
+
+    <!-- Sub 6 -->
+    <g transform="translate(750, 0)">
+      <rect width="90" height="28" rx="5" fill="#121620" stroke="#242b38" stroke-width="1" />
+      <text x="45" y="18" fill="#c9d1d9" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">ZSH / BASH</text>
+    </g>
+  </g>
+</svg>

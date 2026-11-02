@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 240" width="100%" height="100%">
+  <defs>
+    <linearGradient id="m-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#38ef7d" />
+    </linearGradient>
+    <linearGradient id="m-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38ef7d" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    @keyframes mPulse {
+      0%, 100% { stroke-opacity: 0.3; }
+      50% { stroke-opacity: 0.9; }
+    }
+    .trackpad-glow {
+      animation: mPulse 2s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- Card Background -->
+  <rect width="440" height="240" rx="10" fill="#0d1117" />
+  <rect x="1" y="1" width="438" height="238" rx="9" fill="#121622" stroke="url(#m-border)" stroke-width="1.2" />
+
+  <!-- Badge / Status -->
+  <rect x="20" y="20" width="168" height="22" rx="11" fill="#13231e" stroke="#38ef7d" stroke-width="1" stroke-opacity="0.5" />
+  <circle cx="30" cy="31" r="4" fill="#38ef7d" />
+  <text x="40" y="35" fill="#38ef7d" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700">HARDWARE SYSTEMS</text>
+
+  <!-- Title -->
+  <text x="20" y="70" fill="url(#m-grad)" font-family="-apple-system, system-ui, sans-serif" font-size="20" font-weight="800">
+    Native macOS Utilities
+  </text>
+  <text x="20" y="88" fill="#8b949e" font-family="ui-monospace, monospace" font-size="11">
+    mac-insomnia &bull; mac-lumitrack &bull; mac-keyglow
+  </text>
+
+  <!-- Description -->
+  <text x="20" y="116" fill="#c9d1d9" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="400">
+    Ultra-lightweight lid-closed stay-awake &amp; backlight control.
+  </text>
+  <text x="20" y="132" fill="#8b949e" font-family="-apple-system, system-ui, sans-serif" font-size="11.5">
+    Native C, Swift, and private Apple IOKit/Multitouch bindings.
+  </text>
+
+  <!-- Spec Metrics Box -->
+  <rect x="20" y="150" width="400" height="42" rx="6" fill="#080a0f" stroke="#242b38" stroke-width="1" />
+  
+  <text x="32" y="167" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">INSOMNIA DISK</text>
+  <text x="32" y="183" fill="#00ff88" font-family="ui-monospace, monospace" font-size="11" font-weight="700">~24 KB (LOW)</text>
+
+  <text x="160" y="167" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">LUMITRACK RAM</text>
+  <text x="160" y="183" fill="#00d2ff" font-family="ui-monospace, monospace" font-size="11" font-weight="700">~3.5 MB RSS</text>
+
+  <text x="295" y="167" fill="#8b949e" font-family="ui-monospace, monospace" font-size="9.5">KEYGLOW ENGINE</text>
+  <text x="295" y="183" fill="#bc8cff" font-family="ui-monospace, monospace" font-size="11" font-weight="700">60 FPS &bull; &lt;0.2% CPU</text>
+
+  <!-- Mini MacBook Wireframe Vector -->
+  <g transform="translate(340, 20)">
+    <rect x="0" y="0" width="70" height="44" rx="3" fill="#18202d" stroke="#58a6ff" stroke-width="1" />
+    <line x1="8" y1="12" x2="62" y2="12" stroke="#58a6ff" stroke-width="0.8" opacity="0.4" />
+    <path d="M -8 44 L 78 44 L 74 48 L -4 48 Z" fill="#242b38" stroke="#58a6ff" stroke-width="1" />
+    <rect x="24" y="44" width="22" height="3" fill="#00ff88" class="trackpad-glow" />
+  </g>
+
+  <!-- Bottom Action Hint -->
+  <text x="20" y="214" fill="#38ef7d" font-family="ui-monospace, monospace" font-size="10" font-weight="600">
+    OPEN SOURCE REPOSITORIES &rarr; github.com/anant-rajj
+  </text>
+</svg>
