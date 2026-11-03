@@ -12,7 +12,7 @@ NUM_FRAMES = 450
 FPS = 10
 DUR = 45.0
 
-# Typography
+# Typography: crisp, high-clarity font
 font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Black.ttf", 34)
 try:
     font_bezel = ImageFont.truetype("/System/Library/Fonts/Monaco.ttf", 9)
@@ -36,6 +36,12 @@ max_y = H - pad_y - 20 - (th + extra_h)
 W_box = max_x - min_x
 H_box = max_y - min_y
 
+tube_top = 10
+tube_bottom = H - 18
+tube_height = tube_bottom - tube_top
+tube_left = 10
+tube_right = W - 10
+
 def tri_wave(val):
     p = (val * 2.0) % 2.0
     return 1.0 - abs(p - 1.0)
@@ -45,6 +51,7 @@ Ry = 4.0
 px = 0.12
 py = 0.28
 
+# 10 vibrant Dish TV phosphor colors
 palette = [
     (0, 255, 102),   # Electric Phosphor Green
     (0, 212, 255),   # Cyan Laser
@@ -68,7 +75,7 @@ for k in range(-10, 20):
         bounces.append((int(ty * NUM_FRAMES), 'Y'))
 bounces.sort(key=lambda x: x[0])
 
-# Precompute glitch schedule using Statistics & Permutations and Combinations (P&C)
+# Precompute statistical P&C glitch schedule on the name
 np.random.seed(42)
 random.seed(42)
 
@@ -76,12 +83,10 @@ MODALITIES = ['H_TEAR', 'RGB_SPLIT', 'STATIC_BAND', 'INTERLACE_JITTER']
 glitch_schedule = {}
 
 def schedule_glitch_burst(start_frame, duration, severity=1.0):
-    # Combinations: choose k modalities out of 4 (Binomial trial)
     k_modalities = min(4, max(1, np.random.binomial(n=3, p=0.65) + 1))
     active_mods = random.sample(MODALITIES, k_modalities)
     params = {'modalities': active_mods, 'severity': severity}
     
-    # Permutations: generate vertical slice boundaries & Gaussian shifts
     if 'H_TEAR' in active_mods:
         num_slices = random.choice([1, 2])
         slices = []
@@ -114,13 +119,13 @@ def schedule_glitch_burst(start_frame, duration, severity=1.0):
         decay = math.exp(-d * 0.7)
         glitch_schedule[f] = (params, decay)
 
-# 1. Statistical Impact Glitches: Bernoulli trial on wall impacts
+# 1. Statistical Impact Glitches on Wall Collisions (Bernoulli trial)
 for b_frame, axis in bounces:
     if np.random.random() < 0.45:
         dur = random.choice([2, 3])
         schedule_glitch_burst(b_frame, dur, severity=1.2)
 
-# 2. Ambient Signal Tracking Glitches: Poisson arrival process (~4 bursts across 45s)
+# 2. Ambient Signal Tracking Glitches (Poisson process)
 target_ambient = 4
 ambient_times = np.random.choice(range(10, NUM_FRAMES - 10), size=target_ambient, replace=False)
 for a_frame in ambient_times:
@@ -136,7 +141,7 @@ for i in range(NUM_FRAMES):
     c_idx = b_count % len(palette)
     frame_colors.append(palette[c_idx])
 
-# CRT Tube Glitch Engine
+# Tube glitch engine (applied only inside active glass)
 def apply_tube_glitch(tube_arr, params, decay):
     out = tube_arr.copy()
     th, tw, tc = out.shape
@@ -196,12 +201,33 @@ def render_crt_frame(frame_idx):
     # 1. Base CRT dark tube (#070a10)
     img = Image.new("RGBA", (W, H), (7, 10, 16, 255))
 
-    # 2. Phosphor Glow Bloom Layer
+    # 2. Slow Rolling CRT Line / Hum Bar running slowly all over the screen
+    # Takes 22.5s per sweep down the tube (2 full slow sweeps across 45.0s loop)
+    roll_phase = (t * 2.0) % 1.0
+    roll_y = tube_top + roll_phase * tube_height
+    bar_height = 26
+
+    roll_overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d_roll = ImageDraw.Draw(roll_overlay)
+
+    for dy in range(-int(bar_height / 2), int(bar_height / 2)):
+        y_pos = int(roll_y + dy)
+        if tube_top <= y_pos <= tube_bottom:
+            dist = abs(dy) / (bar_height / 2.0)
+            alpha = int(32 * (1.0 - dist * dist))
+            d_roll.line([(tube_left, y_pos), (tube_right, y_pos)], fill=(*accent_col, alpha), width=1)
+            # Center bright scanline beam
+            if dy == 0:
+                d_roll.line([(tube_left, y_pos), (tube_right, y_pos)], fill=(255, 255, 255, 55), width=1)
+
+    img = Image.alpha_composite(img, roll_overlay)
+
+    # 3. Razor-Sharp Text & Tight Phosphor Glow (More clear pixels!)
     glow_img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d_glow = ImageDraw.Draw(glow_img)
 
-    for rad in (15, 10, 6, 2):
-        alpha = int(42 * (1.0 - rad / 17.0))
+    # High-clarity tight glow (sharp, vibrant halo, zero muddy blur)
+    for rad, alpha in [(8, 45), (5, 65), (3, 90), (1, 140)]:
         d_glow.text((tx - rad, ty), text, font=font, fill=(*accent_col, alpha))
         d_glow.text((tx + rad, ty), text, font=font, fill=(*accent_col, alpha))
         d_glow.text((tx, ty - rad), text, font=font, fill=(*accent_col, alpha))
@@ -209,25 +235,25 @@ def render_crt_frame(frame_idx):
 
     # Dish TV curved antenna arc above "RAJ"
     arc_box = [tx + tw - 24, ty - 18, tx + tw + 10, ty + 18]
-    d_glow.arc(arc_box, start=195, end=345, fill=(*accent_col, 190), width=3)
-    d_glow.ellipse([tx + tw - 5, ty - 16, tx + tw + 2, ty - 9], fill=(*accent_col, 230))
+    d_glow.arc(arc_box, start=195, end=345, fill=(*accent_col, 200), width=3)
+    d_glow.ellipse([tx + tw - 5, ty - 16, tx + tw + 2, ty - 9], fill=(*accent_col, 240))
 
     img = Image.alpha_composite(img, glow_img)
     draw = ImageDraw.Draw(img)
 
-    # Core crisp text
+    # Core 100% white crisp text for pin-sharp readability
     draw.text((tx, ty), text, font=font, fill=(255, 255, 255, 255))
-    draw.text((tx, ty), text, font=font, fill=(*accent_col, 175))
+    draw.text((tx, ty), text, font=font, fill=(*accent_col, 160))
 
     # Sharp antenna arc on top
     draw.arc(arc_box, start=195, end=345, fill=(*accent_col, 255), width=2)
     draw.ellipse([tx + tw - 5, ty - 16, tx + tw + 2, ty - 9], fill=(255, 255, 255, 255))
 
-    # 3. Authentic CRT Horizontal Scanlines across the tube
-    for y_line in range(9, H - 9, 3):
-        draw.line([(9, y_line), (W - 9, y_line)], fill=(0, 0, 0, 75), width=1)
+    # 4. Clean 1px CRT Scanlines across the tube
+    for y_line in range(tube_top, tube_bottom, 3):
+        draw.line([(tube_left, y_line), (tube_right, y_line)], fill=(0, 0, 0, 60), width=1)
 
-    # 4. Statistical Old Television Glitch (Applied strictly inside cathode tube glass)
+    # 5. Statistical Old Television Glitch (Applied strictly inside cathode tube glass)
     if frame_idx in glitch_schedule:
         params, decay = glitch_schedule[frame_idx]
         tube_crop = np.array(img)[10:H-18, 10:W-10, :3]
@@ -237,29 +263,30 @@ def render_crt_frame(frame_idx):
         img = Image.fromarray(img_np)
         draw = ImageDraw.Draw(img)
 
-    # 5. Outer TV Chassis Bezel & Framing (Drawn on top so chassis remains physically solid)
-    draw.rounded_rectangle([2, 2, W - 3, H - 3], radius=18, outline=(30, 40, 58, 255), width=3)
+    # 6. Outer TV Chassis Bezel & Framing (Drawn on top so chassis remains physically solid)
+    draw.rounded_rectangle([2, 2, W - 3, H - 3], radius=18, outline=(35, 45, 65, 255), width=3)
     draw.rounded_rectangle([7, 7, W - 8, H - 8], radius=14, outline=(14, 20, 30, 255), width=2)
-    draw.line([(35, 9), (W - 35, 9)], fill=(45, 65, 95, 175), width=1)
+    draw.line([(35, 9), (W - 35, 9)], fill=(50, 70, 105, 185), width=1)
     draw.rounded_rectangle([9, 9, W - 10, H - 10], radius=12, outline=(5, 7, 11, 230), width=2)
 
-    # 6. Chassis Hardware Markings (on bottom plastic bezel, outside glass)
-    draw.text((pad_x + 10, H - 14), "DISH TV  //  COLOR CRT  576i", font=font_bezel, fill=(50, 70, 95, 190))
+    # 7. Chassis Hardware Markings (on bottom plastic bezel, outside glass)
+    draw.text((pad_x + 10, H - 14), "DISH TV  //  COLOR CRT  576i", font=font_bezel, fill=(60, 85, 115, 220))
     draw.ellipse([W - pad_x - 70, H - 12, W - pad_x - 64, H - 6], fill=(0, 255, 102, 255))
-    draw.ellipse([W - pad_x - 72, H - 14, W - pad_x - 62, H - 4], outline=(0, 255, 102, 90), width=1)
-    draw.text((W - pad_x - 58, H - 14), "STANDBY", font=font_bezel, fill=(70, 100, 140, 180))
+    draw.ellipse([W - pad_x - 72, H - 14, W - pad_x - 62, H - 4], outline=(0, 255, 102, 120), width=1)
+    draw.text((W - pad_x - 58, H - 14), "STANDBY", font=font_bezel, fill=(80, 120, 160, 210))
 
     return img.convert("RGB")
 
-print(f"Rendering {NUM_FRAMES} frames of ultra-slow Dish TV screensaver with statistical CRT glitch engine...")
+print(f"Rendering {NUM_FRAMES} frames of ultra-slow Dish TV screensaver with slow rolling line & crystal clear pixels...")
 frames = []
 for i in range(NUM_FRAMES):
     frames.append(render_crt_frame(i))
 
-# Quantize frames to adaptive palette for compact file size
+# Quantize frames with 256 colors and NO dithering for razor-sharp pixel clarity!
+print("Quantizing with 256 colors & Dither.NONE for crisp pixels...")
 q_frames = []
 for f in frames:
-    q_frames.append(f.convert('P', palette=Image.ADAPTIVE, colors=96))
+    q_frames.append(f.convert('P', palette=Image.ADAPTIVE, colors=256, dither=Image.Dither.NONE))
 
 out_gif = "/Users/anantraj/anant-rajj/assets/dish-tv-screensaver.gif"
 q_frames[0].save(
