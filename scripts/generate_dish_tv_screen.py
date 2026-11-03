@@ -1,11 +1,16 @@
 import os
 import math
+import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 W, H = 920, 280
 pad_x = 22
 pad_y = 18
+
+NUM_FRAMES = 450
+FPS = 10
+DUR = 45.0
 
 # Typography
 font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Black.ttf", 34)
@@ -31,13 +36,6 @@ max_y = H - pad_y - 20 - (th + extra_h)
 W_box = max_x - min_x
 H_box = max_y - min_y
 
-# Ultra-slow, ambient Dish TV screensaver drift
-# 45.0 seconds cycle at 10 FPS (450 frames)
-# Traversal takes 22.5 seconds!
-FPS = 10
-DUR = 45.0
-NUM_FRAMES = int(FPS * DUR)
-
 def tri_wave(val):
     p = (val * 2.0) % 2.0
     return 1.0 - abs(p - 1.0)
@@ -47,7 +45,6 @@ Ry = 4.0
 px = 0.12
 py = 0.28
 
-# 10 vibrant Dish TV phosphor colors
 palette = [
     (0, 255, 102),   # Electric Phosphor Green
     (0, 212, 255),   # Cyan Laser
@@ -65,30 +62,131 @@ bounces = []
 for k in range(-10, 20):
     tx = (k / 2.0 - px) / Rx
     if 0 <= tx < 1.0:
-        bounces.append(tx)
+        bounces.append((int(tx * NUM_FRAMES), 'X'))
     ty = (k / 2.0 - py) / Ry
     if 0 <= ty < 1.0:
-        bounces.append(ty)
-bounces.sort()
+        bounces.append((int(ty * NUM_FRAMES), 'Y'))
+bounces.sort(key=lambda x: x[0])
 
+# Precompute glitch schedule using Statistics & Permutations and Combinations (P&C)
+np.random.seed(42)
+random.seed(42)
+
+MODALITIES = ['H_TEAR', 'RGB_SPLIT', 'STATIC_BAND', 'INTERLACE_JITTER']
+glitch_schedule = {}
+
+def schedule_glitch_burst(start_frame, duration, severity=1.0):
+    # Combinations: choose k modalities out of 4 (Binomial trial)
+    k_modalities = min(4, max(1, np.random.binomial(n=3, p=0.65) + 1))
+    active_mods = random.sample(MODALITIES, k_modalities)
+    params = {'modalities': active_mods, 'severity': severity}
+    
+    # Permutations: generate vertical slice boundaries & Gaussian shifts
+    if 'H_TEAR' in active_mods:
+        num_slices = random.choice([1, 2])
+        slices = []
+        for _ in range(num_slices):
+            h_slice = int(np.random.normal(loc=28, scale=8))
+            h_slice = max(14, min(55, h_slice))
+            y_start = int(np.random.uniform(5, (H - 28) - h_slice))
+            shift_x = int(np.random.normal(loc=0, scale=15 * severity))
+            if shift_x == 0:
+                shift_x = random.choice([-8, 8])
+            slices.append((y_start, y_start + h_slice, shift_x))
+        params['tear_slices'] = slices
+        
+    if 'RGB_SPLIT' in active_mods:
+        split_px = int(np.random.poisson(lam=4.0 * severity)) + 2
+        params['rgb_split_px'] = min(10, split_px)
+        
+    if 'STATIC_BAND' in active_mods:
+        band_h = int(np.random.normal(loc=22, scale=6))
+        band_h = max(12, min(45, band_h))
+        y_band = int(np.random.uniform(5, (H - 28) - band_h))
+        noise_alpha = float(np.random.uniform(0.18, 0.35) * severity)
+        params['static_band'] = (y_band, y_band + band_h, noise_alpha)
+        
+    if 'INTERLACE_JITTER' in active_mods:
+        params['jitter_px'] = random.choice([-2, 2, -3, 3])
+        
+    for d in range(duration):
+        f = (start_frame + d) % NUM_FRAMES
+        decay = math.exp(-d * 0.7)
+        glitch_schedule[f] = (params, decay)
+
+# 1. Statistical Impact Glitches: Bernoulli trial on wall impacts
+for b_frame, axis in bounces:
+    if np.random.random() < 0.45:
+        dur = random.choice([2, 3])
+        schedule_glitch_burst(b_frame, dur, severity=1.2)
+
+# 2. Ambient Signal Tracking Glitches: Poisson arrival process (~4 bursts across 45s)
+target_ambient = 4
+ambient_times = np.random.choice(range(10, NUM_FRAMES - 10), size=target_ambient, replace=False)
+for a_frame in ambient_times:
+    dur = random.choice([2, 3])
+    schedule_glitch_burst(int(a_frame), dur, severity=0.9)
+
+# Colors for each frame
+raw_b_times = [b[0] / NUM_FRAMES for b in bounces]
 frame_colors = []
-frame_flash = []
-
 for i in range(NUM_FRAMES):
     t = i / NUM_FRAMES
-    b_count = sum(1 for bt in bounces if bt <= t + 1e-4)
+    b_count = sum(1 for bt in raw_b_times if bt <= t + 1e-4)
     c_idx = b_count % len(palette)
     frame_colors.append(palette[c_idx])
+
+# CRT Tube Glitch Engine
+def apply_tube_glitch(tube_arr, params, decay):
+    out = tube_arr.copy()
+    th, tw, tc = out.shape
+    mods = params['modalities']
     
-    is_hit = any(abs(t - bt) <= (1.2 / NUM_FRAMES) for bt in bounces)
-    frame_flash.append(is_hit)
+    # Interlace jitter
+    if 'INTERLACE_JITTER' in mods:
+        j = int(params['jitter_px'] * decay)
+        if j != 0:
+            out[0::2, :, :] = np.roll(out[0::2, :, :], j, axis=1)
+            out[1::2, :, :] = np.roll(out[1::2, :, :], -j, axis=1)
+            
+    # Horizontal scanline tear
+    if 'H_TEAR' in mods and 'tear_slices' in params:
+        for y1, y2, shift in params['tear_slices']:
+            s = int(shift * decay)
+            if s != 0:
+                y1_c = max(0, min(th - 1, y1))
+                y2_c = max(0, min(th - 1, y2))
+                if y1_c < y2_c:
+                    out[y1_c:y2_c, :, :] = np.roll(out[y1_c:y2_c, :, :], s, axis=1)
+                    
+    # Static noise band
+    if 'STATIC_BAND' in mods and 'static_band' in params:
+        y1, y2, alpha = params['static_band']
+        y1_c = max(0, min(th - 1, y1))
+        y2_c = max(0, min(th - 1, y2))
+        eff_alpha = alpha * decay
+        if y1_c < y2_c and eff_alpha > 0.05:
+            noise = np.random.normal(loc=120, scale=70, size=(y2_c - y1_c, tw, tc)).astype(np.float32)
+            orig = out[y1_c:y2_c, :, :].astype(np.float32)
+            blended = (1.0 - eff_alpha) * orig + eff_alpha * noise
+            out[y1_c:y2_c, :, :] = np.clip(blended, 0, 255).astype(np.uint8)
+            
+    # RGB chromatic aberration (phosphor beam misconvergence)
+    if 'RGB_SPLIT' in mods and 'rgb_split_px' in params:
+        split = int(params['rgb_split_px'] * decay)
+        if split > 0:
+            r = np.roll(out[:, :, 0], -split, axis=1)
+            g = out[:, :, 1]
+            b = np.roll(out[:, :, 2], split, axis=1)
+            out = np.stack([r, g, b], axis=2)
+            
+    return out
 
 def render_crt_frame(frame_idx):
     t = frame_idx / NUM_FRAMES
     nx = tri_wave(Rx * t + px)
     ny = tri_wave(Ry * t + py)
     accent_col = frame_colors[frame_idx]
-    is_hit = frame_flash[frame_idx]
 
     cur_x = min_x + nx * W_box
     cur_y = min_y + ny * H_box
@@ -102,15 +200,8 @@ def render_crt_frame(frame_idx):
     glow_img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d_glow = ImageDraw.Draw(glow_img)
 
-    if is_hit:
-        bloom_radii = (22, 15, 9, 4)
-        base_alpha = 60
-    else:
-        bloom_radii = (15, 10, 6, 2)
-        base_alpha = 42
-
-    for rad in bloom_radii:
-        alpha = int(base_alpha * (1.0 - rad / (bloom_radii[0] + 2)))
+    for rad in (15, 10, 6, 2):
+        alpha = int(42 * (1.0 - rad / 17.0))
         d_glow.text((tx - rad, ty), text, font=font, fill=(*accent_col, alpha))
         d_glow.text((tx + rad, ty), text, font=font, fill=(*accent_col, alpha))
         d_glow.text((tx, ty - rad), text, font=font, fill=(*accent_col, alpha))
@@ -132,17 +223,27 @@ def render_crt_frame(frame_idx):
     draw.arc(arc_box, start=195, end=345, fill=(*accent_col, 255), width=2)
     draw.ellipse([tx + tw - 5, ty - 16, tx + tw + 2, ty - 9], fill=(255, 255, 255, 255))
 
-    # 3. Authentic CRT Horizontal Scanlines across the ENTIRE tube
+    # 3. Authentic CRT Horizontal Scanlines across the tube
     for y_line in range(9, H - 9, 3):
         draw.line([(9, y_line), (W - 9, y_line)], fill=(0, 0, 0, 75), width=1)
 
-    # 4. Outer TV Chassis Bezel & Framing
+    # 4. Statistical Old Television Glitch (Applied strictly inside cathode tube glass)
+    if frame_idx in glitch_schedule:
+        params, decay = glitch_schedule[frame_idx]
+        tube_crop = np.array(img)[10:H-18, 10:W-10, :3]
+        glitched_crop = apply_tube_glitch(tube_crop, params, decay)
+        img_np = np.array(img)
+        img_np[10:H-18, 10:W-10, :3] = glitched_crop
+        img = Image.fromarray(img_np)
+        draw = ImageDraw.Draw(img)
+
+    # 5. Outer TV Chassis Bezel & Framing (Drawn on top so chassis remains physically solid)
     draw.rounded_rectangle([2, 2, W - 3, H - 3], radius=18, outline=(30, 40, 58, 255), width=3)
     draw.rounded_rectangle([7, 7, W - 8, H - 8], radius=14, outline=(14, 20, 30, 255), width=2)
     draw.line([(35, 9), (W - 35, 9)], fill=(45, 65, 95, 175), width=1)
     draw.rounded_rectangle([9, 9, W - 10, H - 10], radius=12, outline=(5, 7, 11, 230), width=2)
 
-    # 5. Chassis Hardware Markings (on bottom plastic bezel, outside glass)
+    # 6. Chassis Hardware Markings (on bottom plastic bezel, outside glass)
     draw.text((pad_x + 10, H - 14), "DISH TV  //  COLOR CRT  576i", font=font_bezel, fill=(50, 70, 95, 190))
     draw.ellipse([W - pad_x - 70, H - 12, W - pad_x - 64, H - 6], fill=(0, 255, 102, 255))
     draw.ellipse([W - pad_x - 72, H - 14, W - pad_x - 62, H - 4], outline=(0, 255, 102, 90), width=1)
@@ -150,12 +251,12 @@ def render_crt_frame(frame_idx):
 
     return img.convert("RGB")
 
-print(f"Rendering {NUM_FRAMES} frames ({DUR}s at {FPS} FPS)...")
+print(f"Rendering {NUM_FRAMES} frames of ultra-slow Dish TV screensaver with statistical CRT glitch engine...")
 frames = []
 for i in range(NUM_FRAMES):
     frames.append(render_crt_frame(i))
 
-# Quantize frames to adaptive palette
+# Quantize frames to adaptive palette for compact file size
 q_frames = []
 for f in frames:
     q_frames.append(f.convert('P', palette=Image.ADAPTIVE, colors=96))
