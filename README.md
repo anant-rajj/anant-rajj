@@ -1,8 +1,8 @@
 <div align="center">
 
-  <!-- AGY 3D Quantum Dot Grid Sphere Banner (Antigravity Interactive Theme) -->
+  <!-- Classic Retro CRT Television — Dish TV Bouncing Screensaver -->
   <a href="https://anant-rajj.github.io/portfolio/">
-    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/banner-3d-water.gif" width="100%" alt="Anant Raj // AGY 3D Dot Grid Sphere" />
+    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/classic-crt-dishtv.gif" width="100%" alt="Anant Raj // Dish TV Classic CRT Screensaver" />
   </a>
 
   <br />
