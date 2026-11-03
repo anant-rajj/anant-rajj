@@ -1,8 +1,8 @@
 <div align="center">
 
-  <!-- 3D VFX Water & Fluid Wave Banner (Discord Nitro Cyber Aesthetic) -->
+  <!-- AGY 3D Quantum Dot Grid Sphere Banner (Antigravity Interactive Theme) -->
   <a href="https://anant-rajj.github.io/portfolio/">
-    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/banner-3d-water.gif" width="100%" alt="Anant Raj // 3D VFX Fluid Wave Banner" />
+    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/banner-3d-water.gif" width="100%" alt="Anant Raj // AGY 3D Dot Grid Sphere" />
   </a>
 
   <br />
