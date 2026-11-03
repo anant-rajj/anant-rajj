@@ -2,7 +2,7 @@
 
   <!-- Classic Retro CRT Television — Dish TV Bouncing Screensaver -->
   <a href="https://anant-rajj.github.io/portfolio/">
-    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/classic-crt-dishtv.gif" width="100%" alt="Anant Raj // Dish TV Classic CRT Screensaver" />
+    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/dish-tv-screensaver.gif" width="100%" alt="Anant Raj // Dish TV Classic CRT Screensaver" />
   </a>
 
   <br />
