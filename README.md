@@ -1,72 +1,101 @@
 <div align="center">
 
-  <!-- Classic Retro CRT Television — Dish TV Bouncing Screensaver -->
-  <a href="https://anant-rajj.github.io/portfolio/">
-    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/dish-tv-screensaver.gif" width="100%" alt="Anant Raj // Dish TV Classic CRT Screensaver" />
+  <!-- ==================== ANIMATED WAVING HEADER BANNER ==================== -->
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=200&color=0:4f46e5,50:7c3aed,100:00f2fe&section=header" width="100%" alt="Header Wave" />
+
+  <!-- ==================== DYNAMIC TYPING SVG TITLE ==================== -->
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=24&duration=3000&pause=1000&color=00F2FE&center=true&vCenter=true&width=750&lines=Anant+Raj;Native+macOS+Hardware+Controls;Low-Level+Systems+%26+Deterministic+Security;AI+Swarm+Orchestration+%26+Robotics" alt="Typing Title" />
   </a>
 
   <br />
 
-  <!-- Discord Nitro Profile HUD Navigation Buttons -->
+  <!-- ==================== CREDENTIALS & CONTEXT BADGES ==================== -->
+  <p align="center">
+    <img src="https://img.shields.io/badge/E--Cell%20IIT%20Bombay-NEC%20Advanced%20Track-7C3AED?style=for-the-badge&logo=target&logoColor=white" alt="E-Cell IIT Bombay" />
+    <img src="https://img.shields.io/badge/Focus-macOS%20Systems%20%7C%20Apple%20Silicon-4F46E5?style=for-the-badge&logo=apple&logoColor=white" alt="Focus" />
+    <img src="https://img.shields.io/badge/Location-India-00F2FE?style=for-the-badge&logo=googlemaps&logoColor=black" alt="Location" />
+  </p>
+
+  <!-- ==================== ACTION HUD BUTTONS ==================== -->
   <p align="center">
     <a href="https://anant-rajj.github.io/portfolio/">
       <img src="https://img.shields.io/badge/PORTFOLIO-LIVE%20WEBSITE-00f2fe?style=for-the-badge&logo=googlechrome&logoColor=black" alt="Portfolio" />
     </a>
-    <a href="https://anant-rajj.github.io/pratyancha-hacktoberfest/">
-      <img src="https://img.shields.io/badge/VERIPACK-SECURITY%20ANALYZER-57f287?style=for-the-badge&logo=shield&logoColor=black" alt="VeriPack" />
-    </a>
-    <a href="https://github.com/anant-rajj/mac-insomnia">
-      <img src="https://img.shields.io/badge/MAC--INSOMNIA-IOKIT%20DAEMON-5865F2?style=for-the-badge&logo=apple&logoColor=white" alt="Mac Insomnia" />
-    </a>
-    <a href="https://thermox.ai.studio/">
-      <img src="https://img.shields.io/badge/THERMOX-HARDWARE%20BOTTLE-ffaa00?style=for-the-badge&logo=target&logoColor=black" alt="ThermoX" />
+    <a href="https://www.linkedin.com/">
+      <img src="https://img.shields.io/badge/LINKEDIN-CONNECT-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
     </a>
     <a href="mailto:anantraj.clcs@gmail.com">
-      <img src="https://img.shields.io/badge/CONTACT-DIRECT%20TRANSMISSION-9d4edd?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+      <img src="https://img.shields.io/badge/EMAIL-REACH%20OUT-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+    </a>
+    <a href="https://github.com/anant-rajj">
+      <img src="https://img.shields.io/badge/GITHUB-FOLLOW-181717?style=for-the-badge&logo=github&logoColor=white" alt="Follow" />
     </a>
   </p>
 
-  <!-- Fluid Wave Divider (SMIL Dynamic SVG Animation) -->
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0e17,50:0052cc,100:00f2fe&height=90&section=footer" width="100%" alt="Fluid Wave Divider" />
-
-</div>
-
-### 📡 Real-Time Telemetry & Workspace Vitals
-
-<div align="center">
-
-  <!-- Discord Status Card Callout -->
-  <p>
-    <code>🟢 DISCORD STATUS</code> &bull; <strong>ACTIVE // BUILDING NATIVE MACOS HARDWARE CONTROLS & AI SWARMS</strong>
+  <!-- ==================== LIVE METRIC COUNTERS ==================== -->
+  <p align="center">
+    <img src="https://komarev.com/ghpvc/?username=anant-rajj&style=for-the-badge&color=7c3aed" alt="Profile Views" />
+    <img src="https://img.shields.io/github/followers/anant-rajj?style=for-the-badge&logo=github&color=4f46e5" alt="Followers" />
+    <img src="https://img.shields.io/badge/Public_Repositories-15-00f2fe?style=for-the-badge&logo=github" alt="Repositories" />
   </p>
 
-  <!-- GitHub Streak Counter (Discord Cyberpunk Tokyonight Theme) -->
-  <a href="https://github.com/anant-rajj">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=anant-rajj&theme=tokyonight&background=0b0e17&border=00f2fe&stroke=5865f2&ring=57f287&fire=00f2fe&currStreakNum=57f287&sideNums=00f2fe&sideLabels=8b949e&dates=8b949e" alt="Anant's Live GitHub Streak" width="85%" />
-  </a>
-
 </div>
 
-<br />
+---
+
+### 👨‍💻 About Me
+
+I am a **Systems Engineer and Hardware Tools Developer** with a passion for building high-performance, deterministic software at the boundary between software and silicon.
+
+- ⚡ **Low-Level Native Engineering:** Author of ultra-lightweight, zero-dependency macOS CLI daemons and utilities that interface directly with private Apple Silicon kernel frameworks (`CoreBrightness`, `MultitouchSupport`, `IOKit`).
+- 🛡️ **Software Supply-Chain Security:** Designed deterministic AST analysis engines and Zip-Slip traversal defenses (VeriPack / Team pratyancha at Hack Day Sonipat — *42/42 tests green*).
+- 🧊 **AI Swarms & Hardware R&D:** Building autonomous 6-department multi-model orchestration DAGs (Claude • Astra • Gemini) alongside modular thermal hardware architectures (ThermoX).
+- 🏃 **Athletic Discipline:** 100m and 200m track sprinter translating stamina, reaction time, and continuous self-improvement into systems engineering.
+
+> **Open to:** Systems Engineering Roles &bull; Autonomous AI Infrastructure &bull; macOS / Low-Level Tooling
+
+---
+
+### 🛠️ Tech Stack & Arsenal
 
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0e17,50:182035,100:5865f2&height=70&section=footer" width="100%" alt="Fluid Wave Divider" />
+
+  <table width="100%">
+    <tr>
+      <td width="33%" align="center"><strong>Core Languages</strong></td>
+      <td width="33%" align="center"><strong>Systems &amp; Hardware</strong></td>
+      <td width="33%" align="center"><strong>AI &amp; Developer Tools</strong></td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="https://skillicons.dev/icons?i=c,cpp,swift,python,bash&perline=5" alt="Languages" />
+      </td>
+      <td align="center">
+        <img src="https://skillicons.dev/icons?i=apple,linux,docker,git,github&perline=5" alt="Systems" />
+      </td>
+      <td align="center">
+        <img src="https://skillicons.dev/icons?i=vscode,idea,postman,regex,md&perline=5" alt="Tools" />
+      </td>
+    </tr>
+  </table>
+
 </div>
+
+---
+
+### 🔬 Systems & Engineering Expertise
+
+| Domain | Proficiency | Implementation Focus &amp; Impact |
+| :--- | :--- | :--- |
+| **macOS Hardware Controls** | `Advanced` | Apple Silicon IOKit `IOPMAssertion`, private `CoreBrightness` &amp; `MultitouchSupport` APIs |
+| **Supply-Chain Security &amp; AST** | `Advanced` | `Path.relative_to` Zip-Slip defense, AST token visitor, Shannon entropy anomaly detection |
+| **Autonomous AI Swarms** | `Advanced` | Multi-model DAGs (Claude • Astra • Gemini), 6-department triage, local Ollama execution |
+| **Thermal &amp; Robotics Hardware** | `Experienced` | ThermoX modular cooling bottle cartridge, hexapod spider-bot kinematics &amp; servo PWM |
+
+---
 
 ### 🛸 Featured Systems & Pinned Showcases
-
-<div align="center">
-
-  <!-- Animated Telemetry & Pinned Showcases HUD -->
-  <a href="https://anant-rajj.github.io/portfolio/">
-    <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/pinned-showcases.gif" width="100%" alt="Featured Systems Telemetry HUD" />
-  </a>
-
-</div>
-
-<br />
-
-#### 🔬 Deep-Dive Project Cards
 
 <table>
   <tr>
@@ -130,48 +159,79 @@
   </tr>
 </table>
 
-<br />
+---
 
-<div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0e17,50:0052cc,100:00f2fe&height=70&section=footer" width="100%" alt="Fluid Wave Divider" />
-</div>
-
-### ⚡ 3D Systems Capability Matrix
-
-<div align="center">
-
-  <!-- Animated 3D Capability Matrix GIF -->
-  <img src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/main/assets/tech-matrix-animated.gif" width="100%" alt="3D Capability Matrix" />
-
-</div>
-
-<br />
+### 🏆 Coding Profiles & Competitions
 
 <p align="center">
-  <img src="https://img.shields.io/badge/C%20%2F%20Obj--C-00f2fe?style=for-the-badge&logo=c&logoColor=black" alt="C" />
-  <img src="https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white" alt="Swift" />
-  <img src="https://img.shields.io/badge/Python%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/macOS%20IOKit-000000?style=for-the-badge&logo=apple&logoColor=white" alt="macOS IOKit" />
-  <img src="https://img.shields.io/badge/Multitouch%20API-5865F2?style=for-the-badge&logo=apple&logoColor=white" alt="Multitouch" />
-  <img src="https://img.shields.io/badge/AST%20Analysis-57f287?style=for-the-badge&logo=shield&logoColor=black" alt="AST" />
-  <img src="https://img.shields.io/badge/Local%20Ollama-ffffff?style=for-the-badge&logo=ollama&logoColor=black" alt="Ollama" />
-  <img src="https://img.shields.io/badge/Robotics%20PWM-ffaa00?style=for-the-badge&logo=arduino&logoColor=black" alt="Robotics" />
+  <a href="https://leetcode.com/">
+    <img src="https://img.shields.io/badge/LEETCODE-ACTIVE%20SOLVER-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode" />
+  </a>
+  <a href="https://github.com/anant-rajj">
+    <img src="https://img.shields.io/badge/GITHUB-15%2B%20REPOSITORIES-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repos" />
+  </a>
+  <a href="https://hackerearth.com/">
+    <img src="https://img.shields.io/badge/HACKATHONS-TEAM%20LEAD-57F287?style=for-the-badge&logo=hackerearth&logoColor=black" alt="Hackathons" />
+  </a>
+  <a href="https://codeforces.com/">
+    <img src="https://img.shields.io/badge/CODEFORCES-PROBLEM%20SOLVER-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codeforces" />
+  </a>
 </p>
 
 ---
 
-### 🏛️ Leadership, Competitions & Athletic Discipline
+### 📊 GitHub Analytics
 
-* **E-Cell IIT Bombay &bull; National Entrepreneurship Challenge (NEC)**: Advanced Track with *Team Ignitrones*. Built on-campus entrepreneurial infrastructure, technical documentation, crisis handling, and live strategy presentations at the flagship E-Summit, IIT Bombay.
-* **Eureka! Flagship Competition**: E-Cell IIT Bombay product initiative &bull; iterative product engineering and hardware-software feedback refinement.
-* **Competitive Athletics**: 100m and 200m track sprinter and marathon runner &bull; translates athletic discipline, stamina, and continuous improvement into high-intensity systems engineering.
+<div align="center">
+
+  <table border="0">
+    <tr>
+      <td valign="top" align="center">
+        <!-- Live Streak Counter -->
+        <a href="https://github.com/anant-rajj">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=anant-rajj&theme=tokyonight&background=0b0e17&border=00f2fe&stroke=5865f2&ring=57f287&fire=00f2fe&currStreakNum=57f287&sideNums=00f2fe&sideLabels=8b949e&dates=8b949e" alt="Live Streak" width="100%" />
+        </a>
+      </td>
+      <td valign="top" align="center">
+        <!-- Most Used Languages Compact Card -->
+        <a href="https://github.com/anant-rajj">
+          <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=anant-rajj&layout=compact&theme=tokyonight&bg_color=0b0e17&border_color=00f2fe&title_color=00f2fe&text_color=8b949e" alt="Top Languages" width="100%" />
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</div>
+
+---
+
+### 🐍 Contribution Activity (Snake Game)
+
+<div align="center">
+
+  <!-- ==================== ANIMATED CONTRIBUTION SNAKE ==================== -->
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/anant-rajj/anant-rajj/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/anant-rajj/anant-rajj/output/github-snake.svg" />
+    <img alt="GitHub Contribution Snake Animation" src="https://raw.githubusercontent.com/anant-rajj/anant-rajj/output/github-snake-dark.svg" width="100%" />
+  </picture>
+
+</div>
+
+---
+
+### 🏛️ Leadership & Athletic Discipline
+
+* **E-Cell IIT Bombay &bull; National Entrepreneurship Challenge (NEC):** Advanced Track with *Team Ignitrones*. Built on-campus entrepreneurial infrastructure, technical documentation, crisis handling, and live strategy presentations at the flagship E-Summit, IIT Bombay.
+* **Eureka! Flagship Competition:** E-Cell IIT Bombay product initiative &bull; iterative product engineering and hardware-software feedback refinement.
+* **Competitive Athletics:** 100m and 200m track sprinter and marathon runner &bull; translates athletic discipline, stamina, and continuous improvement into high-intensity systems engineering.
 
 ---
 
 <div align="center">
 
-  <!-- Bottom Fluid Wave Ocean (SMIL Animated) -->
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0e17,50:0052cc,100:00f2fe&height=120&section=footer" width="100%" alt="Footer Wave" />
+  <!-- ==================== ANIMATED WAVING FOOTER DIVIDER ==================== -->
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b0e17,50:4f46e5,100:00f2fe&height=120&section=footer" width="100%" alt="Footer Wave" />
 
   <p>
     <strong>RESEARCH &bull; UNDERSTAND &bull; DESIGN &bull; IMPLEMENT &bull; TEST &bull; IMPROVE</strong>
